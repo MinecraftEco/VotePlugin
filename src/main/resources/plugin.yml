@@ -1,0 +1,8 @@
+name: MinecraftEcoVote
+version: '${project.version}'
+main: org.craftarix.monitoring.MonitoringPlugin
+api-version: '1.16'
+commands:
+  vote:
+    description: Command for voting
+    usage: /vote
