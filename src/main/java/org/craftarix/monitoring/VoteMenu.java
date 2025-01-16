@@ -43,10 +43,10 @@ public class VoteMenu extends PaginatedMenu {
                                 .replace("{votes}", String.valueOf(currentVotes)));
                     });
                 } else {
-                    replaceItem(event.getSlot(), settings.getSuccessBuyIcon(), 40);
                     product.executeCommands(player);
                     voteService.takeVote(player.getName(), product.getPrice());
                     updateInventory(player);
+                    replaceItem(event.getSlot(), settings.getSuccessBuyIcon(), 40);
                 }
             });
         });

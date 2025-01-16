@@ -130,6 +130,5 @@ public abstract class PaginatedMenu implements Menu {
     protected void updateInventory(Player player) {
         inventory.clear();
         drawPage(player);
-        player.updateInventory();
     }
 }
