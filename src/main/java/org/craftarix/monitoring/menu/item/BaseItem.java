@@ -3,7 +3,6 @@ package org.craftarix.monitoring.menu.item;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.inventory.ItemStack;
-import org.craftarix.monitoring.util.NbtUtil;
 
 @Getter
 
@@ -13,7 +12,7 @@ public abstract class BaseItem implements Item, Cloneable{
     private int slot;
 
     public BaseItem(ItemStack icon, int slot) {
-        this.icon = NbtUtil.setTag(icon, NbtUtil.AntiDupeTAG, NbtUtil.AntiDupeTAG);
+        this.icon = icon;
         this.slot = slot;
     }
     public Item clone(){

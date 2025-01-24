@@ -8,7 +8,6 @@ import org.craftarix.monitoring.api.McEcoService;
 import org.craftarix.monitoring.api.VoteService;
 import org.craftarix.monitoring.command.VoteCommand;
 import org.craftarix.monitoring.config.Settings;
-import org.craftarix.monitoring.menu.listener.AntiDupeListener;
 import org.craftarix.monitoring.menu.listener.MenuListener;
 @Getter
 public final class MonitoringPlugin extends JavaPlugin {
@@ -28,7 +27,6 @@ public final class MonitoringPlugin extends JavaPlugin {
 
 
         Bukkit.getPluginManager().registerEvents(new MenuListener(), this);
-        Bukkit.getPluginManager().registerEvents(new AntiDupeListener(), this);
         getCommand("vote").setExecutor(new VoteCommand());
     }
 

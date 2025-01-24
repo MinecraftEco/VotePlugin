@@ -210,11 +210,11 @@ public class ItemUtil {
             }
 
             SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
-
             GameProfile gameProfile = new GameProfile(UUID.randomUUID(), "ItzStonlex");
             gameProfile.getProperties().put("textures", new Property("textures", texture));
+            var profile = ReflectionUtil.getResolvableProfile(gameProfile);
 
-            ReflectionUtil.setField(skullMeta, "profile", gameProfile);
+            ReflectionUtil.setField(skullMeta, "profile", profile);
 
             itemStack.setItemMeta(skullMeta);
             return this;
