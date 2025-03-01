@@ -23,19 +23,18 @@ public class VoteMenu extends PaginatedMenu {
     @Override
     protected void drawInventory(Player player) {
         var voteService = MonitoringPlugin.INSTANCE.getVoteService();
-        var votes = voteService.getVotes(player.getName());
+        var currentVotes = voteService.getVotes(player.getName());
 
         settings.getDesign().forEach(item -> {
-            var newIcon = ItemUtil.replace(item.getIcon(), "{votes}", String.valueOf(votes));
+            var newIcon = ItemUtil.replace(item.getIcon(), "{votes}", String.valueOf(currentVotes));
             var newItem = item.clone();
             newItem.setIcon(newIcon);
             draw(newItem);
         });
 
         settings.getProducts().forEach(product -> {
-            var newIcon = ItemUtil.replace(product.getIcon(), "{votes}", String.valueOf(votes));
+            var newIcon = ItemUtil.replace(product.getIcon(), "{votes}", String.valueOf(currentVotes));
             addToMarkup(newIcon, (event) -> {
-                var currentVotes = voteService.getVotes(player.getName());
                 if (currentVotes < product.getPrice()) {
                     replaceItem(event.getSlot(), settings.getNotEnoughVotesIcon(), 40);
                     settings.getNotEnoughVotesMessages().forEach(message -> {
