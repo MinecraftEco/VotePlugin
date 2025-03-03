@@ -2,7 +2,6 @@ package org.craftarix.monitoring.api;
 
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import lombok.var;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.craftarix.monitoring.api.model.CurrentServerModel;

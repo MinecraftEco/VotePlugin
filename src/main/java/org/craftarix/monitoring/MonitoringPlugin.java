@@ -1,10 +1,11 @@
 package org.craftarix.monitoring;
 
 import lombok.Getter;
-import lombok.var;
+
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.craftarix.monitoring.api.McEcoService;
+import org.craftarix.monitoring.api.McEcoServiceAsync;
 import org.craftarix.monitoring.api.VoteService;
 import org.craftarix.monitoring.command.VoteCommand;
 import org.craftarix.monitoring.config.Settings;
@@ -22,7 +23,7 @@ public final class MonitoringPlugin extends JavaPlugin {
         saveDefaultConfig();
 
         var apiKey = getConfig().getString("apiKey");
-        voteService = new McEcoService(apiKey);
+        voteService = new McEcoServiceAsync(apiKey);
         settings.load(getConfig());
 
 

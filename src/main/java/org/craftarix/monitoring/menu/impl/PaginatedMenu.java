@@ -1,7 +1,6 @@
 package org.craftarix.monitoring.menu.impl;
 
 import lombok.Setter;
-import lombok.var;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;

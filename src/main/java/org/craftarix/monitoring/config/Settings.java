@@ -1,7 +1,6 @@
 package org.craftarix.monitoring.config;
 
 import lombok.Getter;
-import lombok.var;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;

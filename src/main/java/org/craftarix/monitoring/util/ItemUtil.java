@@ -4,7 +4,6 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import lombok.experimental.UtilityClass;
 import lombok.val;
-import lombok.var;
 import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;

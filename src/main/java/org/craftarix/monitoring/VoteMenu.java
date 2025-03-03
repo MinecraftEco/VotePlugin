@@ -1,30 +1,53 @@
 package org.craftarix.monitoring;
 
 import com.google.common.collect.Lists;
-import lombok.var;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.craftarix.monitoring.api.McEcoServiceAsync;
+import org.craftarix.monitoring.api.VoteService;
+import org.craftarix.monitoring.api.model.GetVotesModel;
 import org.craftarix.monitoring.config.Settings;
+import org.craftarix.monitoring.menu.MenuManager;
 import org.craftarix.monitoring.menu.impl.PaginatedMenu;
+import org.craftarix.monitoring.util.GsonUtil;
 import org.craftarix.monitoring.util.ItemUtil;
 
 public class VoteMenu extends PaginatedMenu {
 
     private static final Settings settings = MonitoringPlugin.INSTANCE.getSettings();
-
+    private final VoteService voteService;
+    private int currentVotes;
     public VoteMenu() {
         super(settings.getInventoryTitle(), 54);
-
+        voteService = MonitoringPlugin.INSTANCE.getVoteService();
         setMarkupList(Lists.newArrayList(settings.getProductSlots()));
 
         setNextIcon(settings.getNextPage());
         setPrevIcon(settings.getPrevPage());
     }
+    @Override
+    public void openInventory(Player player){
+        if(voteService instanceof McEcoServiceAsync serviceAsync){
+            serviceAsync.getVotesAsync(player.getName())
+                    .whenComplete(((response, throwable) -> {
+                        if(response == null){
+                            return;
+                        }
+                        if(response.statusCode() != 200){
+                            return;
+                        }
+                        currentVotes = GsonUtil.unparseJson(response.body(), GetVotesModel.class).getBalance();
+                        super.openInventory(player);
+                    }));
 
+        }
+        else{
+            currentVotes = voteService.getVotes(player.getName());
+            super.openInventory(player);
+        }
+    }
     @Override
     protected void drawInventory(Player player) {
-        var voteService = MonitoringPlugin.INSTANCE.getVoteService();
-        var currentVotes = voteService.getVotes(player.getName());
-
         settings.getDesign().forEach(item -> {
             var newIcon = ItemUtil.replace(item.getIcon(), "{votes}", String.valueOf(currentVotes));
             var newItem = item.clone();
@@ -49,5 +72,6 @@ public class VoteMenu extends PaginatedMenu {
                 }
             });
         });
+
     }
 }

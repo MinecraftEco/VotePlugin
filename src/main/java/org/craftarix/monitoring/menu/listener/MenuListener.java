@@ -1,6 +1,6 @@
 package org.craftarix.monitoring.menu.listener;
 
-import lombok.var;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
