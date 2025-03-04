@@ -28,18 +28,21 @@ public class VoteMenu extends PaginatedMenu {
     @Override
     public void openInventory(Player player){
         if(voteService instanceof McEcoServiceAsync serviceAsync){
-            serviceAsync.getVotesAsync(player.getName())
-                    .whenComplete(((response, throwable) -> {
-                        if(response == null){
-                            return;
-                        }
-                        if(response.statusCode() != 200){
-                            return;
-                        }
-                        currentVotes = GsonUtil.unparseJson(response.body(), GetVotesModel.class).getBalance();
-                        super.openInventory(player);
-                    }));
-
+            Bukkit.getScheduler().runTaskAsynchronously(MonitoringPlugin.INSTANCE, () -> {
+                serviceAsync.getVotesAsync(player.getName())
+                        .whenComplete(((response, throwable) -> {
+                            if(response == null){
+                                return;
+                            }
+                            if(response.statusCode() != 200){
+                                return;
+                            }
+                            currentVotes = GsonUtil.unparseJson(response.body(), GetVotesModel.class).getBalance();
+                            Bukkit.getScheduler().runTask(MonitoringPlugin.INSTANCE, () -> {
+                                super.openInventory(player);
+                            });
+                        }));
+            });
         }
         else{
             currentVotes = voteService.getVotes(player.getName());
@@ -67,6 +70,7 @@ public class VoteMenu extends PaginatedMenu {
                 } else {
                     product.executeCommands(player);
                     voteService.takeVote(player.getName(), product.getPrice());
+                    currentVotes -= product.getPrice();
                     updateInventory(player);
                     replaceItem(event.getSlot(), settings.getSuccessBuyIcon(), 40);
                 }

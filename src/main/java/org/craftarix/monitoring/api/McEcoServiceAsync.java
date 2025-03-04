@@ -1,7 +1,9 @@
 package org.craftarix.monitoring.api;
 
 import lombok.NonNull;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.craftarix.monitoring.MonitoringPlugin;
 import org.craftarix.monitoring.api.model.CurrentServerModel;
 import org.craftarix.monitoring.api.model.GetVotesModel;
 import org.craftarix.monitoring.api.model.TakeVoteModel;
@@ -39,7 +41,9 @@ public class McEcoServiceAsync implements VoteService{
         var model = new TakeVoteModel();
         model.setValue(votes);
 
-        getResponse("/mc-server-plugin/" + playerName, "POST", GsonUtil.parseJson(model));
+        Bukkit.getScheduler().runTaskAsynchronously(MonitoringPlugin.INSTANCE, () -> {
+            getResponse("/mc-server-plugin/" + playerName, "POST", GsonUtil.parseJson(model));
+        });
     }
 
     @Override
