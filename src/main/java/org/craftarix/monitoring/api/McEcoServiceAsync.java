@@ -16,6 +16,7 @@ import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class McEcoServiceAsync implements VoteService{
+    private static final HttpClient httpClient = HttpClient.newHttpClient();
     private final static String user_url = "https://minecraft.eco";
     private final static String api_url = "https://api.minecraft.eco";
 
@@ -51,7 +52,7 @@ public class McEcoServiceAsync implements VoteService{
         return null;
     }
     private CompletableFuture<HttpResponse<String>> getResponse(@NonNull String requestAddress, @NonNull String method, String writableJson) {
-        try(var httpClient = HttpClient.newHttpClient()) {
+        try{
             var body = writableJson == null ? HttpRequest.BodyPublishers.noBody() : HttpRequest.BodyPublishers.ofString(writableJson);
             var httpRequest = HttpRequest.newBuilder(new URI(api_url + requestAddress))
                     .header("Content-Type", "application/json")
