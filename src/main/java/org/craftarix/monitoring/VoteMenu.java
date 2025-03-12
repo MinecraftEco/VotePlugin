@@ -7,7 +7,6 @@ import org.craftarix.monitoring.api.McEcoServiceAsync;
 import org.craftarix.monitoring.api.VoteService;
 import org.craftarix.monitoring.api.model.GetVotesModel;
 import org.craftarix.monitoring.config.Settings;
-import org.craftarix.monitoring.menu.MenuManager;
 import org.craftarix.monitoring.menu.impl.PaginatedMenu;
 import org.craftarix.monitoring.util.GsonUtil;
 import org.craftarix.monitoring.util.ItemUtil;

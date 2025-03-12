@@ -1,5 +1,6 @@
 package org.craftarix.monitoring.menu.impl;
 
+import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -7,7 +8,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.craftarix.monitoring.MonitoringPlugin;
 import org.craftarix.monitoring.menu.Menu;
-import org.craftarix.monitoring.menu.MenuManager;
 import org.craftarix.monitoring.menu.item.impl.ButtonItem;
 import org.craftarix.monitoring.menu.item.ClickHandler;
 import org.craftarix.monitoring.menu.item.Item;
@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class PaginatedMenu implements Menu {
+    @Getter
     private final Inventory inventory;
     private final ConcurrentHashMap<Integer, Item> items = new ConcurrentHashMap<>();
     private final List<Item> list = new ArrayList<>();
@@ -31,8 +32,7 @@ public abstract class PaginatedMenu implements Menu {
     private SimpleItem prevIcon;
 
     public PaginatedMenu(String title, int size) {
-        inventory = Bukkit.createInventory(null, size, title);
-        ;
+        inventory = Bukkit.createInventory(this, size, title);
     }
 
     protected void replaceItem(int slot, ItemStack newIcon, int delay) {
@@ -77,9 +77,6 @@ public abstract class PaginatedMenu implements Menu {
     @Override
     public void openInventory(Player player) {
         drawPage(player);
-
-        Bukkit.getScheduler().runTaskLater(MonitoringPlugin.INSTANCE,
-                () -> MenuManager.INSTANCE.add(player, this), 5);
         player.openInventory(inventory);
     }
 

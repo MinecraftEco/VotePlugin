@@ -16,7 +16,7 @@ public abstract class SimpleMenu implements Menu {
     private final Inventory inventory;
     private final ConcurrentHashMap<Integer, Item> items = new ConcurrentHashMap<>();
     public SimpleMenu(String title, int size){
-        inventory = Bukkit.createInventory(null, size, title);
+        inventory = Bukkit.createInventory(this, size, title);
     }
     protected abstract void drawInventory(Player player);
     protected void draw(Item item){
